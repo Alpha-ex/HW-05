@@ -1,33 +1,14 @@
-from pathlib import Path
-import sys
+import re
 
+text = "Загальний дохід працівника складається з декількох частин: 1000.01 як основний дохід, доповнений додатковими надходженнями 27.45 і 324.00 доларів."
+def generator_numbers(text):
+    # Використовуємо регулярний вираз для знаходження всіх дійсних чисел у тексті
+    pattern = r'\b\d+\.\d+\b'
+    for match in re.finditer(pattern, text):
+        yield float(match.group())
 
-def get_cats_info(path):
-    cats_list = []
-
-    try:
-        with open(
-        "d:\\goit\\goit-algo-hw-04\\goit-algo-hw-04\\Cats.txt", "r", encoding="cp1251") as file:
-            for line in file:
-                cat_info = line.strip().split(',')
-                if len(cat_info) == 3:
-                    cat_dict = {
-                        "id": cat_info[0].strip(),
-                        "name": cat_info[1].strip(),
-                        "age": int(cat_info[2].strip())
-                    }
-                    cats_list.append(cat_dict)
-
-    except FileNotFoundError:
-        print(f"Файл не знайдено")
-    except Exception as e:
-        print(f"Виникла помилка при читанні файлу: {e}")
-
-    return cats_list
-
-file_path = 'd:\\goit\\goit-algo-hw-04\\goit-algo-hw-04\\Cats.txt'
-cats_info = get_cats_info(file_path)
-
-if cats_info:
-    for cat in cats_info:
-        print(f"ID: {cat['id']}, Name: {cat['name']}, Age: {cat['age']}")
+def sum_profit(text):
+    total_profit = sum(generator_numbers(text))
+    return total_profit
+total_profit = sum_profit(text)
+print("Загальний прибуток:", total_profit)
