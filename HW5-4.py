@@ -1,11 +1,25 @@
+def input_error(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except KeyError:
+            print("Contact not found.")
+        except ValueError:
+            print("Invalid value entered.")
+        except IndexError:
+            print("Insufficient arguments provided.")
+    return wrapper
+
 class PhoneBookAssistant:
     def __init__(self):
         self.phone_book = {}
 
+    # input_error
     def add_contact(self, name, phone):
         self.phone_book[name.lower()] = phone
         print("Contact added.")
 
+    # input_error
     def change_contact(self, name, new_phone):
         if name.lower() in self.phone_book:
             self.phone_book[name.lower()] = new_phone
@@ -13,12 +27,14 @@ class PhoneBookAssistant:
         else:
             print("Contact not found.")
 
+    # input_error
     def show_phone(self, name):
         if name.lower() in self.phone_book:
             print(f"Phone number for {name}: {self.phone_book[name.lower()]}")
         else:
             print("Contact not found.")
 
+    # input_error
     def show_all(self):
         if self.phone_book:
             print("All contacts:")
@@ -27,6 +43,7 @@ class PhoneBookAssistant:
         else:
             print("No contacts available.")
 
+    # input_error
     def parse_input(self, user_input):
         parts = user_input.split()
         command = parts[0].lower()
