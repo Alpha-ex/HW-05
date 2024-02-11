@@ -8,6 +8,8 @@ def input_error(func):
             print("Invalid value entered.")
         except IndexError:
             print("Insufficient arguments provided.")
+        except Exception as e:
+            return f"Error: {e}"
     return wrapper
 
 class PhoneBookAssistant:
